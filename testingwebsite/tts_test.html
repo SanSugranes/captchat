@@ -1,36 +1,28 @@
+<!--
+ETML - École des métiers techniques Lausanne
+Author:         Ricardo De Almeida pereira
+Date:           24/11/2021
+Last modified:  --/--/----
+
+Description:    Alphanumeric captcha generator: 
+                    - Lenght of the string varries in an int range
+                    - Characters are blurred and random 
+                    - Case may vary aswell. 
+                    - The canva is blurred.
+-->
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CapChat - Alphanumeric</title>
+</head>
 
-    <body>
-        <canvas id="myCanvas" width="200" height="100"></canvas>
-        <script>
-            ///random int between 6 and 9 (replace 9 for MAX and 6 for MIN)
-            const MIN = 6;
-            const MAX = 9;
-            var rdm = Math.floor(Math.random() * (MAX - MIN + 1) + MIN);
-
-            ///Generates random string with letters and numbers
-            function makeid(lenght) {
-                var result = '';
-                var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-                var charactersLength = characters.length;
-
-                for (var i = 0; i < lenght; i++) {
-                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-                }
-
-                return result;
-            }
-
-
-            var c = document.getElementById("myCanvas");
-            var ctx = c.getContext("2d");
-
-            ctx.font = "30px Comic Sans MS";
-            ctx.fillText(makeid(rdm), 10, 50);
-            ctx.stroke();
-        </script>
-    </body>
+<body>
+    <canvas id="myCanvas" width="200" height="100"></canvas>
+    <script src="../captchat.js"></script>
+</body>
 
 </html>
