@@ -4,11 +4,12 @@ Author:         Ricardo De Almeida pereira
 Date:           24/11/2021
 Last modified:  --/--/----
 
-Description:    Alphanumeric captcha generator: 
+Description:    Alphanumeric captcha module: 
                     - Lenght of the string varries in an int range
                     - Characters are blurred and random 
-                    - Case may vary aswell. 
-                    - The canva is blurred.
+                    - Background color varries
+                    - Case may vary aswell
+                    - The canva is blurred
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -17,12 +18,19 @@ Description:    Alphanumeric captcha generator:
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>CapChat - Alphanumeric</title>
 </head>
 
 <body>
-    <canvas id="myCanvas" width="200" height="100"></canvas>
-    <script src="./alphanumeric.js"></script>
+    <form>
+        <canvas id="myCanvas" width="200" height="100"></canvas>
+        <script src="./alphanumeric.js"></script>
+        <div>
+            <input type="text" id="input" name="input">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
 </body>
 
 </html>
