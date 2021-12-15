@@ -13,7 +13,6 @@ Description:    Alphanumeric captcha generator:
 */
 
 
-
 //Constants for the random number generator
 const MIN = 6;
 const MAX = 9;
@@ -61,24 +60,40 @@ function random_rgba() {
 var color = random_rgba();
 
 //Canva manipulation
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
+var c = document.getElementById("myCanvas"),
+    randomText = makeid(rdm),
+    ctx = c.getContext("2d");
+
+console.log(randomText);
 
 c.style.backgroundColor = color[0];
 
 //Varries vertical position
 ctx.textBaseline = yPositions[rdmYPosition];
 
+
 //Checks RGB value in order to display either white or black text to keep a decent contrast level between it and the background
 if (color[1]) {
     ctx.font = "30px Comic Sans MS";
-    ctx.fillText(makeid(rdm), 10, 50);
+    ctx.fillText(randomText, 10, 50);
     c.style.border = "2px solid black";
 } else {
     ctx.font = "30px Comic Sans MS";
     c.style.border = "2px solid grey";
     ctx.fillStyle = "#ffffff";
-    ctx.fillText(makeid(rdm), 10, 50);
+    ctx.fillText(randomText, 10, 50);
 }
 ctx.stroke();
-ctx.f
+
+
+function test() {
+    answer = document.getElementById('userinput').value;
+    console.log("answer: " + answer);
+
+    if (randomText != answer){
+        alert('Bad answer!');
+    }
+    else {
+        alert('Good answer!');
+    }
+}
