@@ -13,28 +13,6 @@ Description:    Alphanumeric captcha generator:
 */
 
 
-//Constants for the random number generator
-const MIN = 6;
-const MAX = 9;
-
-//Random int (int the range of MIN - MAX)  
-var rdm = Math.floor(Math.random() * (MAX - MIN + 1) + MIN),
-    rdmYPosition = Math.floor(Math.random() * (5 - 0 + 1) + 0),
-    yPositions = ['alphabetic', 'top', 'hanging', 'middle', 'ideographic', 'bottom'];
-
-
-//Generates random string with letters and numbers
-function makeid(lenght) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-
-    for (var i = 0; i < lenght; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-
-    return result;
-}
 
 //Random color generator (RGBA)
 //Source: https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript
@@ -57,43 +35,49 @@ function random_rgba() {
     }
 }
 
-var color = random_rgba();
+function drawCaptcha(string) {
+    var rdmYPosition = Math.floor(Math.random() * (5 - 0 + 1) + 0),
+        yPositions = ['alphabetic', 'top', 'hanging', 'middle', 'ideographic', 'bottom'];
 
-//Canva manipulation
-var c = document.getElementById("myCanvas"),
-    randomText = makeid(rdm),
-    ctx = c.getContext("2d");
+    var color = random_rgba();
 
-console.log(randomText);
+    //Canva manipulation
+    var c = document.getElementById("myCanvas"),
+        randomText = string,
+        ctx = c.getContext("2d");
 
-c.style.backgroundColor = color[0];
+    console.log(randomText);
 
-//Varries vertical position
-ctx.textBaseline = yPositions[rdmYPosition];
+    c.style.backgroundColor = color[0];
+
+    //Varries vertical position
+    ctx.textBaseline = yPositions[rdmYPosition];
 
 
-//Checks RGB value in order to display either white or black text to keep a decent contrast level between it and the background
-if (color[1]) {
-    ctx.font = "30px Comic Sans MS";
-    ctx.fillText(randomText, 10, 50);
-    c.style.border = "2px solid black";
-} else {
-    ctx.font = "30px Comic Sans MS";
-    c.style.border = "2px solid grey";
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText(randomText, 10, 50);
+    //Checks RGB value in order to display either white or black text to keep a decent contrast level between it and the background
+    if (color[1]) {
+        ctx.font = "30px Comic Sans MS";
+        ctx.fillText(randomText, 10, 50);
+        c.style.border = "2px solid black";
+    } else {
+        ctx.font = "30px Comic Sans MS";
+        c.style.border = "2px solid grey";
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(randomText, 10, 50);
+    }
+    let buffer = c.toDataURL();
+    return image = new Buffer(buffer.split(',')[1], 'base64');
+
 }
-ctx.stroke();
 
 
 function test() {
     answer = document.getElementById('userinput').value;
     console.log("answer: " + answer);
 
-    if (randomText != answer){
+    if (randomText != answer) {
         alert('Bad answer!');
-    }
-    else {
+    } else {
         alert('Good answer!');
     }
 }
