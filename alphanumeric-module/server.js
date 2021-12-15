@@ -113,7 +113,7 @@ app.listen(port, () => {
 })
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/tts_test.html')
+    res.sendFile(__dirname + '/alpha-capchat.html')
 })
 app.get('/image', (req, res) => {
     /* res.set("Content-Type", "image/png");
