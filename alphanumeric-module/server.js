@@ -19,9 +19,11 @@ const { createCanvas, Canvas } = require("canvas");
 const fs = require("fs");
 const app = express();
 const port = 3000
-    //Constants for the random number generator
+//Constants for the random number generator
 const MIN = 6;
 const MAX = 9;
+
+var clients = [];
 
 
 //Random color generator (RGBA)
@@ -107,21 +109,59 @@ function test() {
     }
 }
 
-
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
+    log(`Server running at http://localhost:${port}`);
+    purgeClients();
+});
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/alpha-capchat.html')
-})
+    res.sendFile(__dirname + '/alpha-capchat.html');
+});
+
+//TODO: Get the id thought client, add the client token in the /image URL
 app.get('/image', (req, res) => {
-    /* res.set("Content-Type", "image/png");
-     res.send(image);*/
-    let image = drawCaptcha(makeid());
+    let id = makeid();
+    let image = drawCaptcha(id);
+
     res.writeHead(200, {
         'Content-Type': 'image/png',
         'Content-Length': image.length
     });
     res.end(image);
-})
+});
+
+app.get('/new-client', (req, res) => {
+    // Set client informations, send it next.
+    let token = generateToken();
+    clients.push({ token: token, verif: makeid(), generatedTimestamp: Date.now() });
+
+    res.send(token);
+});
+
+function generateToken() {
+    return 'xxxx-xxxx-v01-xxx.x-xxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+// Purge all old clients
+function purgeClients() {
+    var purgedCount = 0;
+    clients.forEach((client) => {
+        console.log('trying');
+        if (client.generatedTimestamp < new Date(Date.now() - 10 * 6000)) {
+            clients.splice(clients.indexOf(client), 1);
+            purgedCount++;
+        }
+    });
+
+    log(`Purged ${purgedCount} clients.`);
+
+    setTimeout(purgeClients, 60000 * 3);
+}
+
+function log(message) {
+    var currDate = new Date(Date.now());
+    console.log(`[${currDate.getHours() < 10 ? '0' + currDate.getHours() : currDate.getHours()}:${currDate.getMinutes() < 10 ? '0' + currDate.getMinutes() : currDate.getMinutes()}:${currDate.getSeconds() < 10 ? '0' + currDate.getSeconds() : currDate.getSeconds()}] ${message}`);
+}
