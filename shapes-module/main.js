@@ -2,14 +2,11 @@
 ETML - École des métiers techniques Lausanne
 Author:         Ricardo De Almeida pereira - Santiago Sugrañes
 Date:           24/11/2021
-Last modified:  15/12/2021
+Last modified:  22/12/2021
 
-Description:    Alphanumeric captcha generator: 
+Description:    Shapes captcha generator: 
 - Captcha generator script
--> Random characters
--> Random background color
--> Range of the lenght
--> Vertical position variation
+-> Random shapes
 */
 
 const debug = false;
